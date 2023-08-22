@@ -1,0 +1,233 @@
+﻿@using BowlingChallenge.Shared;
+
+@page "/"
+
+<PageTitle>Bowling</PageTitle>
+<header>
+    Bowling Challenge
+</header>
+<div class="container-fluid">
+    
+    <div class="row title">
+        <h1>
+        Score : @score
+        </h1>
+    </div>
+
+    <div class="col-12 scoreboard">
+        <table>
+                <tr>
+                    @if(scoreboard == null)
+                    {
+                        <p> Loading Scoreboard . . .</p>
+                    }
+                    else
+                    {
+                        @foreach(var frame in scoreboard.Frames)
+                        {
+               
+                            <td>
+                                @frame.frameScore
+                            </td>
+                        }
+                    }
+
+                </tr>
+            </table>
+    </div>
+    <div class="col-12 userInput">
+        @for(int pins = 0; pins <= 10; pins++)
+        {
+            int pinValue = pins;
+            <button class="btn btn-primary rollButtons" @onclick="(() => SubmitRoll(pinValue))" disabled="@disableButton">@pins</button>
+        }
+
+       
+    </div>
+    <div class="col-12 reset">
+        <button class="btn btn-primary resetButton" @onclick="Reset">Reset</button>
+    </div>
+    <div class="col-12 message">
+        <h4>@invalidMessage</h4>
+    </div>
+
+
+</div>
+@code {
+    private string invalidMessage;
+
+    private bool disableButton;
+
+    private int rollInput;
+
+    private int score;
+
+    private Scoreboard scoreboard;
+
+    protected override async Task OnInitializedAsync()
+    {
+        scoreboard = new Scoreboard();
+    }
+
+    private void SubmitRoll(int pins)
+    {
+        rollInput = pins;
+
+        if (ValidateRoll())
+        {
+            ScoreFinalRoll();
+            ScoreNormalRoll();
+        }
+
+    }
+
+    //Checks if user input is a valid score
+    private bool ValidateRoll()
+    {
+
+        if(scoreboard.Frames[scoreboard.currentFrame].isLast == true)
+        {
+            if(rollInput > 10)
+            {
+                invalidMessage = "Rolling a " + rollInput + " is not possible here";
+                return false;
+            }
+            else
+            {
+                invalidMessage = "";
+                return true;
+            }
+        }
+        else
+        {
+            if(scoreboard.Frames[scoreboard.currentFrame].frameScore + rollInput > 10)
+            {
+                invalidMessage = "Rolling a " + rollInput + " is not possible here";
+                return false;
+            }
+            else
+            {
+                invalidMessage = "";
+                return true;
+            }
+        }
+
+    }
+
+    //Checks for a frame that is the final frame
+    private void ScoreFinalRoll()
+    {
+        Frame currentFrame = scoreboard.Frames[scoreboard.currentFrame];
+        if(scoreboard.Frames[scoreboard.currentFrame].isLast == true)
+        {
+            if(currentFrame.currentRoll <= 1)
+            {
+                scoreboard.Frames[scoreboard.currentFrame].frameScore += rollInput;
+                score += rollInput;
+            }
+            if(currentFrame.currentRoll == 1 &&
+               currentFrame.frameScore < 10)
+            {
+                disableButton = true;
+            }
+            else if(currentFrame.currentRoll == 1 &&
+               currentFrame.frameScore >= 10)
+            {
+                scoreboard.Frames[scoreboard.currentFrame].bonusRolls = 1;
+            }
+            else if(currentFrame.bonusRolls == 1)
+            {
+                scoreboard.Frames[scoreboard.currentFrame].frameScore += rollInput;
+                score += rollInput;
+                disableButton = true;
+            }
+
+            ScoreBonusRolls();
+            scoreboard.Frames[scoreboard.currentFrame].currentRoll++;
+        }
+    }
+
+    //Checks for a frame that is not the final of a game
+    private void ScoreNormalRoll()
+    { 
+        if(scoreboard.Frames[scoreboard.currentFrame].currentRoll < 2 &&
+           scoreboard.Frames[scoreboard.currentFrame].frameScore < 10 &&
+           scoreboard.Frames[scoreboard.currentFrame].isLast == false)
+        {
+            scoreboard.Frames[scoreboard.currentFrame].frameScore += rollInput;
+            score += rollInput;
+
+            ScoreBonusRolls();
+
+            AddBonusRolls();
+
+            NextRoll();
+
+        }
+    }
+
+    //Checks if the current frame was a spare or strike and adds the bonus rolls
+    private void AddBonusRolls()
+    {                  
+        if(scoreboard.Frames[scoreboard.currentFrame].frameScore == 10 &&
+            scoreboard.Frames[scoreboard.currentFrame].currentRoll == 0)
+        {
+            scoreboard.Frames[scoreboard.currentFrame].bonusRolls = 2;
+        }
+        else if(scoreboard.Frames[scoreboard.currentFrame].frameScore == 10 &&
+                scoreboard.Frames[scoreboard.currentFrame].currentRoll == 1)
+        {
+            scoreboard.Frames[scoreboard.currentFrame].bonusRolls = 1;
+        }
+    }
+
+    //Adds roll value to previous frames if it is a spare or strike
+    private void ScoreBonusRolls()
+    {
+        //Spare
+        if(scoreboard.currentFrame == 1)
+        {
+            if(scoreboard.Frames[scoreboard.currentFrame - 1].bonusRolls > 0)
+            {
+                scoreboard.Frames[scoreboard.currentFrame - 1].frameScore += rollInput;
+                score += rollInput;
+                scoreboard.Frames[scoreboard.currentFrame - 1].bonusRolls--;
+            }
+        }
+
+        //Strike
+        if(scoreboard.currentFrame > 1)
+        {
+            if(scoreboard.Frames[scoreboard.currentFrame - 1].bonusRolls > 0)
+            {
+                scoreboard.Frames[scoreboard.currentFrame - 1].frameScore += rollInput;
+                score += rollInput;
+                scoreboard.Frames[scoreboard.currentFrame - 1].bonusRolls--;
+            }
+
+            if(scoreboard.Frames[scoreboard.currentFrame - 2].bonusRolls > 0)
+            {
+                scoreboard.Frames[scoreboard.currentFrame - 2].frameScore += rollInput;
+                score += rollInput;
+                scoreboard.Frames[scoreboard.currentFrame - 2].bonusRolls--;
+            }
+        }
+    }
+
+    //Increments the roll and moves to the next frame if both rolls have been thrown
+    private void NextRoll()
+    {
+        if(scoreboard.Frames[scoreboard.currentFrame].currentRoll++ == 1 ||
+            scoreboard.Frames[scoreboard.currentFrame].frameScore == 10)
+        {
+            scoreboard.currentFrame++;
+        }
+    }
+
+    private void Reset()
+    {
+        scoreboard = new Scoreboard();
+        score = 0;
+        disableButton = false;
+    }
+}

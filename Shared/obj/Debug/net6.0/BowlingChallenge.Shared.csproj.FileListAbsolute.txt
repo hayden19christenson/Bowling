@@ -1,0 +1,12 @@
+C:\Users\hayde\OneDrive\Documents\Projects\BowlingChallenge\Shared\bin\Debug\net6.0\BowlingChallenge.Shared.deps.json
+C:\Users\hayde\OneDrive\Documents\Projects\BowlingChallenge\Shared\bin\Debug\net6.0\BowlingChallenge.Shared.dll
+C:\Users\hayde\OneDrive\Documents\Projects\BowlingChallenge\Shared\bin\Debug\net6.0\BowlingChallenge.Shared.pdb
+C:\Users\hayde\OneDrive\Documents\Projects\BowlingChallenge\Shared\obj\Debug\net6.0\BowlingChallenge.Shared.csproj.AssemblyReference.cache
+C:\Users\hayde\OneDrive\Documents\Projects\BowlingChallenge\Shared\obj\Debug\net6.0\BowlingChallenge.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hayde\OneDrive\Documents\Projects\BowlingChallenge\Shared\obj\Debug\net6.0\BowlingChallenge.Shared.AssemblyInfoInputs.cache
+C:\Users\hayde\OneDrive\Documents\Projects\BowlingChallenge\Shared\obj\Debug\net6.0\BowlingChallenge.Shared.AssemblyInfo.cs
+C:\Users\hayde\OneDrive\Documents\Projects\BowlingChallenge\Shared\obj\Debug\net6.0\BowlingChallenge.Shared.csproj.CoreCompileInputs.cache
+C:\Users\hayde\OneDrive\Documents\Projects\BowlingChallenge\Shared\obj\Debug\net6.0\BowlingChallenge.Shared.dll
+C:\Users\hayde\OneDrive\Documents\Projects\BowlingChallenge\Shared\obj\Debug\net6.0\refint\BowlingChallenge.Shared.dll
+C:\Users\hayde\OneDrive\Documents\Projects\BowlingChallenge\Shared\obj\Debug\net6.0\BowlingChallenge.Shared.pdb
+C:\Users\hayde\OneDrive\Documents\Projects\BowlingChallenge\Shared\obj\Debug\net6.0\ref\BowlingChallenge.Shared.dll

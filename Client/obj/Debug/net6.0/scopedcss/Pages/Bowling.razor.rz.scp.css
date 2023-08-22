@@ -1,0 +1,70 @@
+header[b-0h388kzqmp] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    font-size: 40px;
+    font-weight: bold;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+.title[b-0h388kzqmp]{
+    text-align: center;
+    margin-top: 50px;
+}
+
+.scoreboard[b-0h388kzqmp]{
+    justify-content: center;
+    display: flex;
+}
+
+table[b-0h388kzqmp] {
+    border: solid black 1px;
+    margin: 15px;
+}
+
+
+table tr td[b-0h388kzqmp] {
+    border-right: 1px solid black;
+    color: black;
+    font-size: 25px;
+    padding: 20px;
+    width: 40%;
+}
+
+.userInput[b-0h388kzqmp] {
+    justify-content: center;
+    display: flex;
+}
+
+button[b-0h388kzqmp]{
+    margin-left: 5px;
+    width: 45px;
+    height: 45px;
+    vertical-align: middle;
+}
+
+.message[b-0h388kzqmp] {
+    justify-content: center;
+    display: flex;
+    margin-top: 15px;
+    color: red;
+}
+
+.reset[b-0h388kzqmp] {
+    justify-content: center;
+    display: flex;
+    margin-top: 15px;
+}
+
+.rollButtons[b-0h388kzqmp]{
+    background-color: forestgreen;
+}
+
+.resetButton[b-0h388kzqmp]{
+    width: 70px;
+    height: 50px;
+    background-color: darkred;
+}
